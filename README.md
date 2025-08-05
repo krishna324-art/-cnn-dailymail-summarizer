@@ -2,11 +2,60 @@ CNN/DailyMail Summarizer
 
 A Hugging Face Transformers–based abstractive summarization model fine-tuned on the CNN/DailyMail dataset.
 
+Script Overview:
+
+`finetunedmodel.py` does the following:
+
+1. **Environment check**  
+   - Detects and reports GPU availability and memory.
+
+2. **Dataset loading & truncation**  
+   - Reads `/root/cnn_dailymail_full.txt`.  
+   - Truncates to 50 MB if larger.  
+   - Tokenizes with GPT-2 tokenizer (block size 128).  
+   - Creates training examples (up to 10 000).
+
+3. **Train/validation split**  
+   - 90% of examples for training, 10% for validation.
+
+4. **Model initialization**  
+   - Loads `gpt2` model and tokenizer.  
+   - Resizes token embeddings and moves model to GPU if available.
+
+5. **TrainingArguments optimized for Vast.ai**  
+   - `num_train_epochs=5`  
+   - `per_device_train_batch_size=4` (with gradient accumulation → effective BS=8)  
+   - `learning_rate=5e-5`, `warmup_steps=100`, `weight_decay=0.01`  
+   - Mixed precision (`fp16=True`), frequent logging & checkpointing  
+   - Early stopping on best `eval_loss`
+
+6. **Training and checkpointing**  
+   - Saves best model to `/root/creative-finetuned-model`.  
+   - Logs to `/root/creative_logs`.  
+   - Final validation loss printed.
+
+7. **Text generation tests**  
+   - Uses Hugging Face `pipeline("text-generation")` on 10 CNN-style prompts.  
+   - Prints samples for three creativity settings (temperature=1.2, 0.8, 0.5).  
+   - Tips for news-style writing in comments.
+
+Outputs
+-------
+• **Model checkpoint**: `/root/creative-finetuned-model/`  
+• **Training logs**: `/root/creative_logs/`  
+• **Generated samples**: printed to console during script run  
+
+Usage
+-----
+1. Upload your dataset file to `/root/cnn_dailymail_full.txt` on Vast.ai.  
+2. SSH into the instance and run:
+
+
 
 
 
 About the generated output
-- Each line in `generated_summaries.txt` corresponds to one test article  
+- Each line in `generated output.txt` corresponds to one test article  
 - We evaluated 10 samples and stored them here for quick comparison  
 - You can inspect diversity (Distinct-1, Distinct-2), coherence, and factual consistency across these examples
 
