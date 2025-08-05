@@ -1,5 +1,5 @@
-# Vast.ai Optimized GPT-2 Fine-tuning Script
-# Install required packages
+
+
 # pip install datasets transformers torch
 
 import torch
@@ -259,4 +259,5 @@ print("   - Maintain journalistic tone and style")
 print("\n📁 Files saved:")
 print(f"   - Model: {model_save_path}")
 print(f"   - Logs: /root/creative_logs")
+
 print(f"   - Results: /root/creative_results") 
