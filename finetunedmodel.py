@@ -37,11 +37,11 @@ print(f"Raw text length: {len(raw_text):,} characters")
 # DATASET TRUNCATION FOR MANAGEABLE TRAINING
 max_chars = 50000000  # 50MB limit for manageable training
 if len(raw_text) > max_chars:
-    print(f"⚠️  Dataset too large ({len(raw_text):,} chars). Truncating to {max_chars:,} chars...")
+    print(f" Dataset too large ({len(raw_text):,} chars). Truncating to {max_chars:,} chars...")
     raw_text = raw_text[:max_chars]
-    print(f"✅ Truncated to {len(raw_text):,} characters ({len(raw_text)/1e6:.1f}MB)")
+    print(f" Truncated to {len(raw_text):,} characters ({len(raw_text)/1e6:.1f}MB)")
 else:
-    print(f"✅ Dataset size is manageable: {len(raw_text):,} characters ({len(raw_text)/1e6:.1f}MB)")
+    print(f" Dataset size is manageable: {len(raw_text):,} characters ({len(raw_text)/1e6:.1f}MB)")
 
 # Initialize tokenizer
 print("Loading GPT-2 tokenizer...")
@@ -66,11 +66,11 @@ print(f"Created {len(examples):,} training examples")
 # LIMIT TRAINING EXAMPLES FOR FASTER TRAINING
 max_examples = 10000  # Limit to 10K examples for faster training
 if len(examples) > max_examples:
-    print(f"⚠️  Too many examples ({len(examples):,}). Limiting to {max_examples:,} examples...")
+    print(f"  Too many examples ({len(examples):,}). Limiting to {max_examples:,} examples...")
     examples = examples[:max_examples]
-    print(f"✅ Limited to {len(examples):,} training examples")
+    print(f" Limited to {len(examples):,} training examples")
 else:
-    print(f"✅ Using all {len(examples):,} training examples")
+    print(f"Using all {len(examples):,} training examples")
 
 class DialogueDataset(Dataset):
     def __init__(self, examples):
@@ -156,7 +156,7 @@ trainer = Trainer(
 # Train the model
 print("Starting training on Vast.ai...")
 print("=" * 60)
-print("📊 Vast.ai Optimized Training:")
+print(" Vast.ai Optimized Training:")
 print("   - Dataset truncated to 50MB")
 print("   - Limited to 10K training examples")
 print("   - Optimized for RTX 3090/3080")
@@ -181,7 +181,7 @@ print("Training completed successfully on Vast.ai!")
 
 # TEXT GENERATION USING HUGGINGFACE PIPELINE
 print("\n" + "="*60)
-print("🎭 TEXT GENERATION WITH HUGGINGFACE PIPELINE")
+print(" TEXT GENERATION WITH HUGGINGFACE PIPELINE")
 print("=" * 60)
 
 # Create text generation pipeline
@@ -206,11 +206,11 @@ test_prompts = [
     "Police confirmed that"
 ]
 
-print("\n🧪 Testing CNN news-style prompts:")
+print("\n Testing CNN news-style prompts:")
 print("-" * 50)
 
 for i, prompt in enumerate(test_prompts, 1):
-    print(f"\n📝 Test {i}: '{prompt}'")
+    print(f"\n Test {i}: '{prompt}'")
     
     # Generate with different parameters
     result = text_generator(
@@ -224,40 +224,41 @@ for i, prompt in enumerate(test_prompts, 1):
     )
     
     generated_text = result[0]['generated_text']
-    print(f"🎉 Generated: '{generated_text}'")
+    print(f" Generated: '{generated_text}'")
     print("-" * 30)
 
 # Test different creativity levels with news-style prompts
-print("\n🎨 Testing different creativity levels for news generation:")
+print("\n Testing different creativity levels for news generation:")
 print("-" * 50)
 
 prompt = "WASHINGTON (CNN) -- Officials announced"
 
 # High creativity
-print(f"\n🔥 High Creativity (temperature=1.2):")
+print(f"\n High Creativity (temperature=1.2):")
 result = text_generator(prompt, max_length=100, temperature=1.2, top_k=100)
-print(f"🎉 Generated: '{result[0]['generated_text']}'")
+print(f" Generated: '{result[0]['generated_text']}'")
 
 # Balanced creativity
-print(f"\n⚖️  Balanced Creativity (temperature=0.8):")
+print(f"\n  Balanced Creativity (temperature=0.8):")
 result = text_generator(prompt, max_length=100, temperature=0.8, top_k=50)
-print(f"🎉 Generated: '{result[0]['generated_text']}'")
+print(f"Generated: '{result[0]['generated_text']}'")
 
 # Low creativity
-print(f"\n🎯 Low Creativity (temperature=0.5):")
+print(f"\n Low Creativity (temperature=0.5):")
 result = text_generator(prompt, max_length=100, temperature=0.5, top_k=20)
-print(f"🎉 Generated: '{result[0]['generated_text']}'")
+print(f" Generated: '{result[0]['generated_text']}'")
 
-print("\n✅ Text generation completed!")
-print("\n💡 Tips for news-style generation:")
+print("\n Text generation completed!")
+print("\n Tips for news-style generation:")
 print("   - Use location + source format: 'WASHINGTON (CNN) --'")
 print("   - Include attribution: 'officials said', 'witnesses reported'")
 print("   - Add quotes and statements for authenticity")
 print("   - Include specific details and facts")
 print("   - Maintain journalistic tone and style")
 
-print("\n📁 Files saved:")
+print("\n Files saved:")
 print(f"   - Model: {model_save_path}")
 print(f"   - Logs: /root/creative_logs")
 
 print(f"   - Results: /root/creative_results") 
+
